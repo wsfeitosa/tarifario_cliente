@@ -1,0 +1,47 @@
+<html>
+<head>	
+	<?php echo $this->headLink()->appendStylesheet('/Estilos/scoa.css'); ?>
+	<?php  $this->headScript()->appendFile('/Libs/jquery/jquery.js'); ?>
+	<script language="javascript" src="/Libs/jquery-ui/js/jquery-1.7.1.min.js"></script>
+	<script language="javascript" src="/Libs/jquery-ui/js/jquery-ui-1.8.17.custom.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+
+		$( "#progressbar" ).show();
+
+		//Barra de Progresso     
+	    $( "#progressbar" ).progressbar({
+	        value: 100       
+	    });
+	     
+	    IndeterminateProgressBar($("#progressbar"));
+	             
+	    function IndeterminateProgressBar(pb) 
+	    {
+	        $(pb).css({ "padding-left": "0%", "padding-right": "90%" });
+	        $(pb).progressbar("option", "value", 100);
+	        $(pb).animate({ paddingLeft: "90%", paddingRight: "0%" }, 4000, "linear",
+	        function () { IndeterminateProgressBar(pb); });
+	    } 
+
+		$("#form1").delay(3000).submit();
+
+	});//.delay(3000);
+	</script>
+</head>
+<body>	
+	<div id="progressbar"></div>
+	<center> 		
+	    <div id='carregando'>        
+	        <img src='/Imagens/pesquisando.gif' border='0'/>   
+	        <p />Por favor aguarde enquanto pesquisamos a informação...     
+	    </div>	      
+	</center>
+	<form action="<?php echo $this->baseUrl()."/index.php/Tarifario/gerar/";?>" name="form1" id="form1" method="post">
+		<input type="hidden" name="id_cliente" id="id_cliente" value="<?php echo $this->id_cliente;?>" />
+		<input type="hidden" name="sentido" id="sentido" value="<?php echo $this->sentido;?>" />
+		<input type="hidden" name="tarifario_padrao" id="tarifario_padrao" value="<?php echo $this->tarifario_padrao;?>" />
+		<input type="hidden" name="tipo_tarifario" id="tipo_tarifario" value="<?php echo $this->tipo_tarifario;?>" />
+	</form>	
+</body>
+</html>

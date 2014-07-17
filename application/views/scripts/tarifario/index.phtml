@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Scoa</title>
+    <meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+    <meta name="description" content="Scoa Sistema de controle Allink" />
+    <meta name="author" content="Allink Transportes Internacionais Ltda" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="robots" content="noarchive" />
+    <link href="scoa.css" rel="stylesheet" type="text/css" />
+    <?php echo $this->headLink()->appendStylesheet('/Estilos/scoa.css'); ?>
+    <?php echo $this->headScript()->appendFile('/Libs/jquery/jquery.js'); ?>  
+    <?php echo $this->headScript()->appendFile($this->baseUrl().'/assets/js/tarifario/index.js');?>  
+</head>
+<form action="<?php echo $this->baseUrl()."/index.php/Tarifario/redirecionar/";?>" name="form1" id="form1" method="post">
+	<input type="hidden" name="id_cliente" id="id_cliente" value="" />
+    <div class="principal">
+        <p class="titulo">Exportar Tarifário</p>
+        <div class="container_elemento">
+            <label class="label" id="label_cliente">Cliente</label>
+            <input type="text" name="razao_cliente" id="razao_cliente" value="" size="28" />
+        </div>
+        <div class="container_elemento">
+            <label class="label">Sentido</label>
+            <select name="sentido" id="sentido">
+            	<option value="0">Selecione</option>
+            	<option value="EXP">Exportação</option>
+            	<option value="IMP">Importação</option>
+            </select>
+        </div> 
+        <div class="container_elemento">
+            <label class="label">Tarifário Padrão</label>
+            <input type="checkbox" name="tarifario_padrao" id="tarifario_padrao" value="N"/>
+        </div> 
+         <div class="container_elemento">
+            <label class="label">Tipo de Tarifário</label>
+            <select name="tipo_tarifario" id="tipo_tarifario">
+                <option value="0">Cliente</option>
+                <?php
+                /**
+                if( $_SESSION['matriz'][4] == "DIRETORIA" || $_SESSION['matriz'][4] == "CPD" || in_array($_SESSION['matriz'][7], $_SESSION['controle_acesso']['tarifario_especial_ppa']) )
+                {
+                **/    
+                ?>
+                <!--<option value="1">Especial</option>-->
+                <option value="3">Tarifário - Uso Interno</option>
+                <?php
+                //}
+                
+                if($_SESSION['matriz'][4] == "CPD" || in_array($_SESSION['matriz'][7], $_SESSION['controle_acesso']['usuarios_teste']))
+                {
+                ?>                
+                <option value="2">Open Office</option>
+                <?php    
+                }  
+                if($_SESSION['matriz'][4] == "CPD" || in_array($_SESSION['matriz'][7], $_SESSION['controle_acesso']['tarifario_especial_ppa']) )
+                {  
+                ?>
+                <option value="4">Formato Scoa</option>
+                <?php
+                }
+                ?>
+            </select>
+        </div>      
+        <div class="botoes">
+            <label class="label">&nbsp;</label>
+            <input type="button" name="gerar" id="gerar" value="Gerar" />
+            <input type="button" name="sair" id="sair" value="Sair" />            
+        </div>
+    </div>    
+</form>
+<center>   
+    <div id='carregando'>        
+        <img src="/Imagens/pesquisando.gif" border='0'/>   
+        <p />Por favor aguarde enquanto pesquisamos a informação...     
+    </div>
+</center>
+</body>
+</html>
