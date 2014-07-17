@@ -1,7 +1,41 @@
 $(document).ready(function(){
 
 	$("#carregando").hide();
+	$("#opcoes-tarifario-padrao").hide();
+	$("#selecao-paises").hide();
 	
+	$( "#pais" ).autocomplete({
+		
+		source: "/Libs/autocompletar/pais.php",
+		minLength: 3,
+		select: function( event, ui ){
+
+			$("#pais").val("");	
+			$("#pais").text("");
+			$("#paises_selecionados").append(new Option(ui.item.label, ui.item.id));
+
+		}
+	});
+
+	$("#remover_pais").click(function(){
+		
+		$("#paises_selecionados option:selected").remove();
+		
+	});
+
+	$("[name='opcao']").change(function(){
+
+		if( $(this).attr("id") == "sob-consulta" )
+		{
+			$("#selecao-paises").show('slow');
+		}
+		else
+		{
+			$("#selecao-paises").hide('slow');
+		}	
+
+	});
+
 	$("#tarifario_padrao").change(function(){
 		
 		if( $(this).is(":checked") )
@@ -11,7 +45,8 @@ $(document).ready(function(){
 			$("#razao_cliente").hide('slow');
 			$("#label_cliente").hide('slow');	
 			$("#razao_cliente").val("");
-			$("#id_cliente").val("");		
+			$("#id_cliente").val("");
+			$("#opcoes-tarifario-padrao").show('slow');		
 		}
 		else
 		{
@@ -19,6 +54,9 @@ $(document).ready(function(){
 			$("#razao_cliente").attr("disabled",false);
 			$("#razao_cliente").show('slow');
 			$("#label_cliente").show('slow');
+			$("#opcoes-tarifario-padrao").hide('slow');
+			$("[name='opcao']").attr("checked",false);	
+			$("#selecao-paises").hide('slow');		
 		}	
 			
 	});	

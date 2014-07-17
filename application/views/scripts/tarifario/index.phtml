@@ -9,7 +9,9 @@
     <meta name="robots" content="noarchive" />
     <link href="scoa.css" rel="stylesheet" type="text/css" />
     <?php echo $this->headLink()->appendStylesheet('/Estilos/scoa.css'); ?>
-    <?php echo $this->headScript()->appendFile('/Libs/jquery/jquery.js'); ?>  
+    <link href="/Libs/jquery-ui-1.10.4/css/redmond/jquery-ui-1.10.4.custom.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Libs/jquery-ui-1.10.4/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/Libs/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js"></script>    
     <?php echo $this->headScript()->appendFile($this->baseUrl().'/assets/js/tarifario/index.js');?>  
 </head>
 <form action="<?php echo $this->baseUrl()."/index.php/Tarifario/redirecionar/";?>" name="form1" id="form1" method="post">
@@ -35,33 +37,45 @@
          <div class="container_elemento">
             <label class="label">Tipo de Tarifário</label>
             <select name="tipo_tarifario" id="tipo_tarifario">
-                <option value="0">Cliente</option>
-                <?php
-                /**
-                if( $_SESSION['matriz'][4] == "DIRETORIA" || $_SESSION['matriz'][4] == "CPD" || in_array($_SESSION['matriz'][7], $_SESSION['controle_acesso']['tarifario_especial_ppa']) )
-                {
-                **/    
-                ?>
-                <!--<option value="1">Especial</option>-->
+                <option value="0">Cliente</option>                              
                 <option value="3">Tarifário - Uso Interno</option>
-                <?php
-                //}
-                
+                <?php              
                 if($_SESSION['matriz'][4] == "CPD" || in_array($_SESSION['matriz'][7], $_SESSION['controle_acesso']['usuarios_teste']))
                 {
                 ?>                
-                <option value="2">Open Office</option>
+                <!--<option value="2">Open Office</option>-->
                 <?php    
                 }  
                 if($_SESSION['matriz'][4] == "CPD" || in_array($_SESSION['matriz'][7], $_SESSION['controle_acesso']['tarifario_especial_ppa']) )
                 {  
                 ?>
-                <option value="4">Formato Scoa</option>
+                <!--<option value="4">Formato Scoa</option>-->
                 <?php
                 }
                 ?>
             </select>
-        </div>      
+        </div>
+        <div class="container_elemento" id="opcoes-tarifario-padrao">
+            <label class="label">Opções</label>
+            <input type="radio" name="opcao" id="fretado" value="fretado" />Fretado
+            <input type="radio" name="opcao" id="sob-consulta" value="sob-consulta" />Sob Consulta
+        </div> 
+        <div id="selecao-paises">
+            <div class="container_elemento">
+                <label class="label">Seleção de Países</label>
+                <input type="text" id="pais" name="pais" value="" />
+            </div>
+            <div class="container_elemento">
+                <select multiple="multiple" name="paises_selecionados[]" id="paises_selecionados" size="10" >
+                    <option value='4'>ALEMANHA</option>
+                    <option value='23'>BELGICA</option>
+                    <option value='41'>CANADA</option>
+                    <option value='67'>ESTADOS UNIDOS</option>
+                    <option value='250'>HOLANDA</option>
+                </select> 
+                <input type="button" name="remover_pais" id="remover_pais" value="Remover" />
+            </div>    
+        </div>    
         <div class="botoes">
             <label class="label">&nbsp;</label>
             <input type="button" name="gerar" id="gerar" value="Gerar" />
